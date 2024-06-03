@@ -1,0 +1,2 @@
+export {RootErrorBoundary} from "./routeErrorBoundary";
+
