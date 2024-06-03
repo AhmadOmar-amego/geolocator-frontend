@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Card, Form, Input, Modal} from "antd";
+import axios from 'axios';
 
 const layout = {
     labelCol: {span: 8},
@@ -21,19 +22,36 @@ const validateMessages = {
 
 
 const Home = () => {
+    const [address, setAddress] = useState('');
+    const [email, setEmail] = useState('');
+    const [response, setResponse] = useState(null);
+    // const [error, setError] = useState(null);
+
+    const urlPath ='http://localhost:3000/location-creation-logic'
 
     const onFinish = (values: any) => {
         console.log(values);
         // setIsModalOpen(true);
-        success()
+
+        try {
+            const res = axios.post(urlPath, {address, email});
+            console.log('res',res)
+            setResponse(res);
+
+            success()
+        } catch (err: any) {
+            console.log('err',err)
+            // setError(err.response ? err.response.data : 'An error occurred');
+        }
+
     };
 
 
     const success = () => {
         Modal.success({
             content: ' "Geolocation: 342325, 2342342").',
-            title:"Your Geolocation is:  ",
-            okText:"Great !"
+            title: "Your Geolocation is:  ",
+            okText: "Great !"
         });
     };
     return (
